@@ -5,13 +5,20 @@ using System.Text;
 namespace ConsoleArenaFighter
 {
     // one round of dice rolling; should correspond to a post in the battle log
-    class Round
+    public class Round
     {
-        //public RollDice() { }
+        // generate random number
+        public Round() { }
+        public Round(int high)
+        {
+            Random random = new Random();  // Get random cust
+            int randomStrenght = random.Next(1, high);
+            int randomDamage = random.Next(1, high);
+            int randomHealth = random.Next(1, high);
 
+            //return ;
+        }
         
-        //Random random = new Random();  // Get random cust
-        //int dice = random.Next(1, 6);
-        //return dice;
+
     }
 }

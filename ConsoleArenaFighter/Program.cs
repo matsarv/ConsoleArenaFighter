@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using ConsoleArenaFighterCharacter;
+using System;
 
 namespace ConsoleArenaFighter
 {
@@ -6,45 +8,62 @@ namespace ConsoleArenaFighter
     {
         static void Main(string[] args)
         {
-            bool keepAlive = true;
-            while (keepAlive)
+            Console.ForegroundColor = ConsoleColor.White;
+            Character player = CreatePlayer();
+
+ 
+            DisplayMessage(
+            "\nWhat do you want to do?\n" +
+            "H - Hunt for an opponent\n" +
+            "R - Retire from fighting\n"
+            );
+            //string selection = AskUserForX(""); // keyInput
+            char play = Console.ReadKey(true).KeyChar;
+            switch (play)
             {
-                Console.WriteLine(
-                    "--- Arena Fighter Menu ---\n" +
-                    "  1: Throw Dice\n" +
-                    "  0: Exit program\n"
-                    );
-                int selection = AskUserForNumberX("Select menu number");
-
-                switch (selection)
-                {
-                    case 1:
-                        Console.WriteLine("Dice number: " + ThrowDice() );
-                        break;
-                    case 0:
-                        keepAlive = false;
-                        break;
-                    default:
-                        Console.WriteLine("Not a valid selection.");
-                        break;
-                }
-                Console.WriteLine("Press any key to continue.");
-                Console.ReadKey(true); 
-                Console.Clear(); 
+                case 'h':
+                    Console.Clear();
+                    Console.WriteLine("create opponent");
+                    Console.WriteLine("start battle");
+                    break;
+                case 'r':
+                    DisplayMessage("You have ended the violence by not fighting.");
+                    Console.Clear();
+                    Console.WriteLine("Final Statistics: \n");
+                    Console.WriteLine("Name: " + player.Name);
+                    /*
+                    Console.WriteLine("Strenght: " + strenght);
+                    Console.WriteLine("Damage: " + damage);
+                    Console.WriteLine("Helth: " + health);
+                    Console.WriteLine(name + "total score is " + "<score>" + "");
+                    */
+                    break;
+                default:
+                    break;
             }
+            
 
+            Console.ReadKey();
+        }
+
+        static Character CreatePlayer()
+        {
+            string name = AskUserForX("Enter the name of your character");
+            int strenght = AskUserForNumberX("Enter strenght (between 1-9)");
+            int damage = AskUserForNumberX("Enter damage (between 1-5)");
+            int health = AskUserForNumberX("Enter strenght (between 1-9)");
+
+            return new Character(name, strenght, damage, health);
+            
         }
 
 
-
-
-
-
-        static int ThrowDice() // add to class Round
+        // generate random number
+        static int GenerateRandomNumber(int low, int high) // 
         {
             Random random = new Random();  // Get random cust
-            int dice = random.Next(1, 6);
-            return dice;
+            int randomNumber = random.Next(low, high);
+            return randomNumber;
         }
 
         // Ask for Input string
@@ -54,7 +73,7 @@ namespace ConsoleArenaFighter
 
             while (input.Length == 0)
             {
-                Console.Write(x + ": "); //Ask for text with input string
+                Console.WriteLine(x); //Ask for text with input string
                 input = Console.ReadLine();
             }
 
@@ -75,12 +94,21 @@ namespace ConsoleArenaFighter
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("Not a number. Please try once more.");
+                    Console.WriteLine("Not a number. Please try again.");
                 }
             }
 
             return number;
 
+        }
+
+        // Messageline with color
+        static void DisplayMessage(string message, ConsoleColor color = ConsoleColor.White)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine(message);
+            Console.ResetColor();
+            
         }
     }
 
