@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Lexicon.CSharp.InfoGenerator;
 
-namespace ConsoleArenaFighterCharacter
+namespace ConsoleArenaFighter
 {
     // for both the player and the opponents
     // int and string
@@ -13,42 +12,20 @@ namespace ConsoleArenaFighterCharacter
         public int strenght;
         public int damage;
         public int health;
-
+        public int score;
 
         public Character() { }
-        public Character(string name, int strenght, int damage, int health)
+        public Character(string name, int strenght, int damage, int health, int score)
         {
-
             Name = name;
             this.strenght = strenght;
             this.damage = damage;
             this.health = health;
-
-            Console.Clear();
-            DisplayCharacter(Name, strenght, damage, health);
-            Console.ReadKey();
+            this.score = score;
         }
 
-        public Character(int strenght, int damage, int health)
-        {
-
-            Name = ""; // get random name of opponent
-            this.strenght = strenght;
-            this.damage = damage;
-            this.health = health;
-
-            Console.Clear();
-            DisplayCharacter(Name, strenght, damage, health);
-            Console.ReadKey();
-        }
-
-        //Console.WriteLine("Name: " + name);
-        //Console.WriteLine("Strenght: " + GenerateRandomNumber(1, 9));
-        //Console.WriteLine("Damage: " + GenerateRandomNumber(1, 9));
-        //Console.WriteLine("Health: " + GenerateRandomNumber(1, 9));
-
-
-        static void DisplayCharacter(string Name, int strenght, int damage, int health)
+        // use to display ex. player.DisplayCharacter();
+        public void DisplayCharacter()
         {
             Console.WriteLine("Name: " + Name);
             Console.WriteLine("Strenght: " + strenght);
@@ -56,13 +33,6 @@ namespace ConsoleArenaFighterCharacter
             Console.WriteLine("Helth: " + health);
         }
 
-        // Display message, optional with color
-        static void DisplayMessage(string message, ConsoleColor color = ConsoleColor.White)
-        {
-            Console.ForegroundColor = color;
-            Console.WriteLine(message);
-            Console.ResetColor();
-        }
     }
 }
 

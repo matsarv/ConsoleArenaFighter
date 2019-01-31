@@ -1,19 +1,28 @@
 ﻿
-using ConsoleArenaFighterCharacter;
+//using ConsoleArenaFighterCharacter;
+using Lexicon.CSharp.InfoGenerator;
 using System;
 
 namespace ConsoleArenaFighter
 {
     class Program
     {
+        static InfoGenerator InfoGen = new InfoGenerator(DateTime.Now.Millisecond);
+
         static void Main(string[] args)
         {
-            Console.ForegroundColor = ConsoleColor.White;
-            Character player = CreatePlayer();
 
- 
+            Console.ForegroundColor = ConsoleColor.White;
+
+            // Player enter Character
+            Character player = CreatePlayer();
+            Console.Clear();
+
+            player.DisplayCharacter();
+            Console.WriteLine();
+
             DisplayMessage(
-            "\nWhat do you want to do?\n" +
+            "What do you want to do?\n" +
             "H - Hunt for an opponent\n" +
             "R - Retire from fighting\n"
             );
@@ -22,43 +31,61 @@ namespace ConsoleArenaFighter
             switch (play)
             {
                 case 'h':
+                    // goto battle - use classes in battle
+
                     Console.Clear();
-                    Console.WriteLine("create opponent");
+                    Character opponent = CreateOpponent();
+                    Console.WriteLine("Player:");
+                    player.DisplayCharacter();
+                    Console.WriteLine();
+                    Console.WriteLine("Opponent:");
+                    opponent.DisplayCharacter();
+
                     Console.WriteLine("start battle");
+                    Console.ReadKey();
+
                     break;
+
                 case 'r':
-                    DisplayMessage("You have ended the violence by not fighting.");
+                    Console.WriteLine("You have ended the violence by not fighting.");
+                    Console.ReadKey();
                     Console.Clear();
                     Console.WriteLine("Final Statistics: \n");
-                    Console.WriteLine("Name: " + player.Name);
-                    /*
-                    Console.WriteLine("Strenght: " + strenght);
-                    Console.WriteLine("Damage: " + damage);
-                    Console.WriteLine("Helth: " + health);
-                    Console.WriteLine(name + "total score is " + "<score>" + "");
-                    */
+                    player.DisplayCharacter();
+                    Console.WriteLine(player.Name + " total score is " + player.score + ".");
                     break;
+
                 default:
                     break;
             }
-            
-
             Console.ReadKey();
         }
 
+        // Create player from input
         static Character CreatePlayer()
         {
             string name = AskUserForX("Enter the name of your character");
             int strenght = AskUserForNumberX("Enter strenght (between 1-9)");
             int damage = AskUserForNumberX("Enter damage (between 1-5)");
             int health = AskUserForNumberX("Enter strenght (between 1-9)");
-
-            return new Character(name, strenght, damage, health);
+            int score = 0;
+            return new Character(name, strenght, damage, health, score);
             
         }
 
+        //Character(string name, int strenght, int damage, int health, int score)
+        static Character CreateOpponent()
+        {
+            return new Character(
+                InfoGen.NextFirstName(),
+                InfoGen.Next(1, 9),
+                InfoGen.Next(1,7),
+                InfoGen.Next(1,9),
+                0
+                );
+        }
 
-        // generate random number
+        // Generate random number
         static int GenerateRandomNumber(int low, int high) // 
         {
             Random random = new Random();  // Get random cust
