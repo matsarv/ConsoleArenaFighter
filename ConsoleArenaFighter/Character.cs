@@ -5,26 +5,26 @@ using System.Text;
 namespace ConsoleArenaFighter
 {
     // for both the player and the opponents
-    // int and string
     public class Character 
     {
+        // Properties
         public string Name { get; set; }
         public int strenght;
         public int damage;
-        public int health;
-        public int score;
+        public int health;  //  { get; set; } // 0 eller -1 dead
 
+        // Default constructor
         public Character() { }
-        public Character(string name, int strenght, int damage, int health, int score)
+        // Instance constructor with four parameters
+        public Character(string name, int strenght, int damage, int health)
         {
             Name = name;
             this.strenght = strenght;
             this.damage = damage;
             this.health = health;
-            this.score = score;
         }
 
-        // use to display ex. player.DisplayCharacter();
+        // Constructor to print player or opponent ex. player.DisplayCharacter();
         public void DisplayCharacter()
         {
             Console.WriteLine("Name: " + Name);
