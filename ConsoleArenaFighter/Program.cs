@@ -28,16 +28,9 @@ namespace ConsoleArenaFighter
 
         }
 
-
-        // Generate random number
-        static int GenerateRandomNumber(int low, int high) // 
-        {
-            Random random = new Random();  // Get random cust
-            int randomNumber = random.Next(low, high);
-            return randomNumber;
-        }
-
-        // Ask for Input string
+        /// <summary>
+        /// Ask user for input string
+        /// </summary>
         static string AskUserForX(string x)
         {
             string input = "";
@@ -51,7 +44,9 @@ namespace ConsoleArenaFighter
             return input;
         }
 
-        // Ask for Input number
+        /// <summary>
+        /// Ask user for input numberm handle exeptions
+        /// </summary>
         static int AskUserForNumberX(string x)
         {
             int number = 0;

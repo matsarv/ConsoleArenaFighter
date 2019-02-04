@@ -6,95 +6,117 @@ using Lexicon.CSharp.InfoGenerator;
 namespace ConsoleArenaFighter
 
 {
-
-    // for the battle itself; should contain the log of the battle, 
-    // as well as references to both the player and the opponent
+    /// <summary>
+    /// For the battle itself; should contain the log of the battle, 
+    /// as well as references to both the player and the opponent
+    /// </summary>
     public class Battle
     {
         static InfoGenerator InfoGen = new InfoGenerator(DateTime.Now.Millisecond);
 
         public Character player { get; set; }
         public Character opponent { get; set; }
+        
+        public List<int> Score { get; set; }
+        public List<Round> Rounds { get; set; }
+        //public List<Battle> Battles { get; set; }
 
-
-
-
-        //public Battle() { }
-        // Constructor to get player from Program.cs
+        char keyPress;
+        
+        // Constructor to get player from Battle.cs
         public Battle(Character player)
         {
+            Rounds = new List<Round>();
+            Score = new List<int>();
+
             this.player = player;
-
-
+            Score.Add(0);
             
+            bool keepAlive = true;
+            int totalScore = 0;
 
-            // Loop if win
-            
-            Console.Clear();
-            player.DisplayCharacter();
-
-            Console.WriteLine();
-            Console.Write(
-            "What do you want to do?\n" +
-            "H - Hunt for an opponent\n" +
-            "R - Retire from fighting\n"
-            );
-            //string selection = AskUserForX(""); // keyInput
-            char play = Console.ReadKey(true).KeyChar;
-
-            switch (play)
+            while (keepAlive)
             {
-                case 'h':
-                    Character opponent = CreateOpponent();
-                    Console.Clear();
+                Console.Clear();
 
-                    Console.WriteLine("\nPlayer:");
+                if (player.health > 0)
+                {
+                    if (Score.Count > 1) { Score.Add(5); }
                     player.DisplayCharacter();
+                    Console.WriteLine();
+                    Console.Write(
+                    "What do you want to do?\n" +
+                    "H - Hunt for an opponent\n" +
+                    "R - Retire from fighting\n"
+                    );
+                    keyPress = Console.ReadKey(true).KeyChar;
+                }
 
-                    Console.WriteLine("\nOpponent:");
-                    opponent.DisplayCharacter();
+                if (player.health <= 0) { keyPress = 'r'; }
 
-                    Console.ReadKey();
+                switch (keyPress)
+                {
+                    case 'h':
+                        Character opponent = CreateOpponent();
 
-                    Console.WriteLine("start battle - Round.cs");
+                        Console.Clear();
+                        Console.WriteLine("\nPlayer:");
 
-                    break;
+                        player.DisplayCharacter();
 
-                case 'r':
-                    Console.WriteLine("You have ended the violence by not fighting.");
-                    Console.ReadKey();
-                    Console.Clear();
-                    Console.WriteLine("Final Statistics: \n");
-                    player.DisplayCharacter();
-                    Console.WriteLine(player.Name + " total score is " + "player.score" + ".");
-                    break;
+                        Console.WriteLine("\nOpponent:");
 
-                default:
-                    Console.WriteLine("switch default");
-                    //Console.Clear();
-                    //Console.WriteLine("Final Statistics: \n");
-                    //player.DisplayCharacter();
-                    //Console.WriteLine(player.Name + " total score is " + "player.score" + ".");
-                    break;
+                        opponent.DisplayCharacter();
+
+                        Console.ReadKey();
+
+                        // Get score
+                        Round round = new Round(player, opponent);
+                        Rounds.Add(round);
+
+                        
+
+                        break;
+
+                    case 'r':
+
+                        if (player.health > 0)
+                        {
+                            Console.WriteLine("You have ended the violence by not fighting.");
+                            Console.ReadKey();
+                        }
+                        else
+                        {
+                            
+                            //player.health = "Dead"; 
+                        }
+                        foreach (var value in Score)
+                        {
+                            totalScore = totalScore + value;
+                        }
+
+                        Console.Clear();
+                        Console.WriteLine("Final Statistics: \n");
+                        player.DisplayCharacter();
+                        Console.WriteLine(player.Name + " total score is " + totalScore + ".");
+                        Console.ReadKey();
+                        keepAlive = false;
+                        break;
+
+                    default:
+                                               
+                        break;
+                }
+
             }
-
-
+            Console.WriteLine("The End");
             Console.ReadKey();
-
-
         }
 
-        // Constructor to get player
-        // Character(string name, int strenght, int damage, int health, int score)
-        private static Character CreatePlayer(string name, int strenght, int damage, int health)
-        {
-            return new Character(
-                name,
-                strenght,
-                damage,
-                health
-                );
-        }
+
+
+            
+
 
         // Constructor to get opponent
         // Character(string name, int strenght, int damage, int health, int score)
