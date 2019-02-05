@@ -14,26 +14,28 @@ namespace ConsoleArenaFighter
     {
         static InfoGenerator InfoGen = new InfoGenerator(DateTime.Now.Millisecond);
 
+        char keyPress;
+        bool dead = false;
+
         public Character player { get; set; }
         public Character opponent { get; set; }
-        
+
         public List<int> Score { get; set; }
         public List<Round> Rounds { get; set; }
-        //public List<Battle> Battles { get; set; }
+        public List<Battle> Battles { get; set; }
 
-        char keyPress;
-        
-        // Constructor to get player from Battle.cs
+        /// <summary>
+        /// Constructor to get player from Battle.cs
+        /// </summary>
         public Battle(Character player)
         {
-            Rounds = new List<Round>();
-            Score = new List<int>();
-
-            this.player = player;
-            Score.Add(0);
-            
             bool keepAlive = true;
             int totalScore = 0;
+
+            Rounds = new List<Round>();
+
+            this.player = player;
+            player.Score.Add(0);
 
             while (keepAlive)
             {
@@ -41,14 +43,14 @@ namespace ConsoleArenaFighter
 
                 if (player.health > 0)
                 {
-                    if (Score.Count > 1) { Score.Add(5); }
                     player.DisplayCharacter();
-                    Console.WriteLine();
+
                     Console.Write(
-                    "What do you want to do?\n" +
+                    "\nWhat do you want to do?\n" +
                     "H - Hunt for an opponent\n" +
                     "R - Retire from fighting\n"
                     );
+
                     keyPress = Console.ReadKey(true).KeyChar;
                 }
 
@@ -60,21 +62,20 @@ namespace ConsoleArenaFighter
                         Character opponent = CreateOpponent();
 
                         Console.Clear();
-                        Console.WriteLine("\nPlayer:");
 
+                        Console.WriteLine("\nPlayer:");
                         player.DisplayCharacter();
 
                         Console.WriteLine("\nOpponent:");
-
                         opponent.DisplayCharacter();
 
                         Console.ReadKey();
 
-                        // Get score
+                        /// <summary>
+                        /// Start a new Round
+                        /// </summary>
                         Round round = new Round(player, opponent);
                         Rounds.Add(round);
-
-                        
 
                         break;
 
@@ -87,39 +88,47 @@ namespace ConsoleArenaFighter
                         }
                         else
                         {
-                            
-                            //player.health = "Dead"; 
+                            dead = true;
                         }
-                        foreach (var value in Score)
+                        foreach (var value in player.Score)
                         {
                             totalScore = totalScore + value;
                         }
 
                         Console.Clear();
                         Console.WriteLine("Final Statistics: \n");
-                        player.DisplayCharacter();
+
+                        if (dead == true)
+                        {
+                            player.DisplayDeadCharacter(); 
+                        }
+                        else
+                        {
+                            player.DisplayCharacter();
+                        }
+
+                        foreach (string value in player.Battles)
+                        {
+                            Console.WriteLine(value);
+                        }
+
                         Console.WriteLine(player.Name + " total score is " + totalScore + ".");
+
                         Console.ReadKey();
+
                         keepAlive = false;
                         break;
 
                     default:
-                                               
+
                         break;
                 }
-
             }
-            Console.WriteLine("The End");
-            Console.ReadKey();
         }
 
-
-
-            
-
-
-        // Constructor to get opponent
-        // Character(string name, int strenght, int damage, int health, int score)
+        /// <summary>
+        /// Constructor to get opponent, Character(string name, int strenght, int damage, int health)
+        /// </summary>
         private static Character CreateOpponent()
         {
             return new Character(
@@ -130,25 +139,30 @@ namespace ConsoleArenaFighter
                 );
         }
 
-        // Ask for Input string
+        /// <summary>
+        /// Ask for Input string
+        /// </summary>
         static string AskUserForX(string x)
         {
             string input = "";
 
             while (input.Length == 0)
             {
-                Console.WriteLine(x); //Ask for text with input string
+                Console.WriteLine(x);
                 input = Console.ReadLine();
             }
 
             return input;
         }
 
-        // Ask for Input number
+        /// <summary>
+        /// Ask for Input number
+        /// </summary>
         static int AskUserForNumberX(string x)
         {
             int number = 0;
             bool noNumber = true;
+
             while (noNumber)
             {
                 try

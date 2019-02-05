@@ -1,5 +1,4 @@
 ﻿
-//using ConsoleArenaFighterCharacter;
 using Lexicon.CSharp.InfoGenerator;
 using System;
 using System.Collections.Generic;
@@ -10,22 +9,24 @@ namespace ConsoleArenaFighter
     {
         static InfoGenerator InfoGen = new InfoGenerator(DateTime.Now.Millisecond);
 
+        /// <summary>
+        /// Start Program and ask user for input
+        /// </summary>
         static void Main(string[] args)
         {
-
             Console.ForegroundColor = ConsoleColor.White;
-            //List<Character> playerCharacter = new List<Character>(); //Not needed
 
-            // Player enter Character
             string name = AskUserForX("Enter the name of your character");
             int strenght = AskUserForNumberX("Enter strenght (between 1-9)");
             int damage = AskUserForNumberX("Enter damage (between 1-5)");
             int health = AskUserForNumberX("Enter strenght (between 1-9)");
+
             Character player = new Character(name,strenght,damage,health);
 
-            // Start battle class with Player input 
+            /// <summary>
+            /// Start class Battle with Player input
+            /// </summary>
             Battle battle = new Battle(player);
-
         }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace ConsoleArenaFighter
         }
 
         /// <summary>
-        /// Ask user for input numberm handle exeptions
+        /// Ask user for input number and handle exeptions
         /// </summary>
         static int AskUserForNumberX(string x)
         {
@@ -65,18 +66,6 @@ namespace ConsoleArenaFighter
             }
 
             return number;
-
-        }
-
-        // Messageline with color
-        static void DisplayMessage(string message, ConsoleColor color = ConsoleColor.White)
-        {
-            Console.ForegroundColor = color;
-            Console.WriteLine(message);
-            Console.ResetColor();
-            
         }
     }
-
-    
 }

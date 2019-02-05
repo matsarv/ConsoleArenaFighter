@@ -4,18 +4,16 @@ using System.Text;
 
 namespace ConsoleArenaFighter
 {
-
-    //Add a random modifier to both characters’ strength, dice rolling
-    //Compare the two strength values
-    //Damage the loser
-
+    /// <summary>
+    /// Class to play battle Roud
+    /// </summary>
     public class Round
     {
-
         public Round(Character player, Character opponent)
         {
             bool throwDice = true;
             int score = 0;
+
             do
             {
                 int playerDiceRoll = DiceRoll(1, 9);
@@ -26,7 +24,8 @@ namespace ConsoleArenaFighter
 
                 Console.WriteLine();
                 Console.WriteLine("-----------------------");
-                Console.WriteLine("Rolls: " +
+                Console.WriteLine(
+                    "Rolls: " +
                     player.Name + " " + newPlayerStrenght + " (" + player.strenght + "+" + playerDiceRoll + ")" +
                     " vs " +
                     opponent.Name + " " + newOpponentStrenght + " (" + opponent.strenght + "+" + opponentDiceRoll + ")"
@@ -35,10 +34,7 @@ namespace ConsoleArenaFighter
                 if (newPlayerStrenght == newOpponentStrenght)
                 {
                     Console.WriteLine("Evenly matched, the combatants circle each other, looking for a better opportunity.");
-                    Console.WriteLine(
-                            "Remaining Health: " +
-                            player.Name + " (" + player.health + "), " + opponent.Name + " (" + opponent.health + ")"
-                            );
+                    Console.WriteLine("Remaining Health: " + player.Name + " (" + player.health + "), " + opponent.Name + " (" + opponent.health + ")");
                 }
 
                 else if (newPlayerStrenght > newOpponentStrenght)
@@ -48,7 +44,10 @@ namespace ConsoleArenaFighter
                         player.Name + " attacks " + opponent.Name + "! " + opponent.Name + " takes " + player.damage + " damage.",
                         ConsoleColor.Green
                         );
-                    //Opponent <= 0  Player is victorious!
+
+                    /// <summary>
+                    /// Player is victorious!
+                    /// </summary>
                     if (opponent.health <= 0)
                     {
                         Console.WriteLine(
@@ -57,19 +56,20 @@ namespace ConsoleArenaFighter
                             "\n-----------------------\n" +
                             player.Name + " is victorious!"
                             );
+
                         score = score + 5;
-                        Console.WriteLine(score);
+                        player.Score.Add(score);
+                        player.Battles.Add(player.Name + " fought and killed " + opponent.Name + ".");
+
                         Console.ReadKey();
+
                         throwDice = false;
                     }
                     else
                     {
                         Console.WriteLine(
-                            "Remaining Health: " +
-                            player.Name + " (" + player.health + "), " + opponent.Name + " (" + opponent.health + ")"
-                            );
+                            "Remaining Health: " + player.Name + " (" + player.health + "), " + opponent.Name + " (" + opponent.health + ")");
                     }
-
                 }
                 else
                 {
@@ -79,7 +79,9 @@ namespace ConsoleArenaFighter
                         ConsoleColor.Red
                         );
 
-                    //Player <= 0  Opponent is victorious!
+                    /// <summary>
+                    /// Opponent is victorious!
+                    /// </summary>
                     if (player.health <= 0)
                     {
                         Console.WriteLine(
@@ -88,33 +90,27 @@ namespace ConsoleArenaFighter
                             "\n-----------------------\n" +
                             opponent.Name + " is victorious!"
                             );
-                        score = score + 2;
 
-                        Console.WriteLine(score);
+                        score = score + 2;
+                        player.Score.Add(score);
+                        player.Battles.Add(player.Name + " was killed by " + opponent.Name + ".");
+
                         Console.ReadKey();
+
                         throwDice = false;
-                        
                     }
                     else
                     {
-                        Console.WriteLine(
-                        "Remaining Health: " +
-                        player.Name + " (" + player.health + "). " + opponent.Name + " (" + opponent.health + ")"
-                        );
+                        Console.WriteLine("Remaining Health: " + player.Name + " (" + player.health + "). " + opponent.Name + " (" + opponent.health + ")");
                     }
                 }
 
             } while (throwDice);
-
         }
 
-        //public static int ScoreInfo(int score)
-        //{
-
-        //    return score;
-        //}
-
-        // Generate random number
+        /// <summary>
+        /// Generate random Dice number
+        /// </summary>
         static int DiceRoll(int low, int high) // 
         {
             Random random = new Random();  // Get random cust
@@ -122,7 +118,9 @@ namespace ConsoleArenaFighter
             return randomNumber;
         }
 
-        // Messageline with color
+        /// <summary>
+        /// Display message line with color
+        /// </summary>
         static void WriteColorLine(string message, ConsoleColor color = ConsoleColor.White)
         {
             Console.ForegroundColor = color;
@@ -130,13 +128,5 @@ namespace ConsoleArenaFighter
             Console.ResetColor();
 
         }
-
-
     }
-
-
-
-
-
-
 }
