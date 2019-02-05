@@ -14,11 +14,10 @@ namespace ConsoleArenaFighter
     {
         static InfoGenerator InfoGen = new InfoGenerator(DateTime.Now.Millisecond);
 
-        char keyPress;
-        bool dead = false;
+        readonly char keyPress;
 
-        public Character player { get; set; }
-        public Character opponent { get; set; }
+        public Character Player { get; set; }
+        public Character Opponent { get; set; }
 
         public List<int> Score { get; set; }
         public List<Round> Rounds { get; set; }
@@ -34,7 +33,7 @@ namespace ConsoleArenaFighter
 
             Rounds = new List<Round>();
 
-            this.player = player;
+            this.Player = player;
             player.Score.Add(0);
 
             while (keepAlive)
@@ -86,10 +85,7 @@ namespace ConsoleArenaFighter
                             Console.WriteLine("You have ended the violence by not fighting.");
                             Console.ReadKey();
                         }
-                        else
-                        {
-                            dead = true;
-                        }
+
                         foreach (var value in player.Score)
                         {
                             totalScore = totalScore + value;
@@ -98,14 +94,7 @@ namespace ConsoleArenaFighter
                         Console.Clear();
                         Console.WriteLine("Final Statistics: \n");
 
-                        if (dead == true)
-                        {
-                            player.DisplayDeadCharacter(); 
-                        }
-                        else
-                        {
-                            player.DisplayCharacter();
-                        }
+                        player.DisplayCharacter();
 
                         foreach (string value in player.Battles)
                         {

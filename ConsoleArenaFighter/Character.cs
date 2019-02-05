@@ -7,7 +7,7 @@ namespace ConsoleArenaFighter
     /// <summary>
     ///    Class for both player and opponents
     /// </summary>
-    public class Character 
+    public class Character
     {
         /// <summary>
         /// Properties
@@ -45,20 +45,8 @@ namespace ConsoleArenaFighter
             Console.WriteLine("Name: " + Name);
             Console.WriteLine("Strenght: " + strenght);
             Console.WriteLine("Damage: " + damage);
-            Console.WriteLine("Helth: " + health); 
+            Console.WriteLine("Healt: " + ((health <= 0) ? "Dead" : health.ToString()));
         }
-
-        /// <summary>
-        /// Constructor to print dead player
-        /// </summary>
-        public void DisplayDeadCharacter()
-        {
-            Console.WriteLine("Name: " + Name);
-            Console.WriteLine("Strenght: " + strenght);
-            Console.WriteLine("Damage: " + damage);
-            Console.WriteLine("Helth: Dead");
-        }
-
     }
 }
 

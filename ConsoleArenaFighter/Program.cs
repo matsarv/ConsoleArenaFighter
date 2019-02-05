@@ -7,7 +7,7 @@ namespace ConsoleArenaFighter
 {
     class Program
     {
-        static InfoGenerator InfoGen = new InfoGenerator(DateTime.Now.Millisecond);
+        static readonly InfoGenerator InfoGen = new InfoGenerator(DateTime.Now.Millisecond);
 
         /// <summary>
         /// Start Program and ask user for input
