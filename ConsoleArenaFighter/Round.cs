@@ -107,7 +107,6 @@ namespace ConsoleArenaFighter
 
             } while (throwDice);
 
-            return;
         }
 
         /// <summary>
