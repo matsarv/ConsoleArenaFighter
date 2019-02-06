@@ -127,46 +127,5 @@ namespace ConsoleArenaFighter
                 InfoGen.Next(1, 9)
                 );
         }
-
-        /// <summary>
-        /// Ask for Input string
-        /// </summary>
-        static string AskUserForX(string x)
-        {
-            string input = "";
-
-            while (input.Length == 0)
-            {
-                Console.WriteLine(x);
-                input = Console.ReadLine();
-            }
-
-            return input;
-        }
-
-        /// <summary>
-        /// Ask for Input number
-        /// </summary>
-        static int AskUserForNumberX(string x)
-        {
-            int number = 0;
-            bool noNumber = true;
-
-            while (noNumber)
-            {
-                try
-                {
-                    number = Convert.ToInt32(AskUserForX(x)); // Ask for number with string
-                    noNumber = false;
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Not a number. Please try again.");
-                }
-            }
-
-            return number;
-
-        }
     }
 }
